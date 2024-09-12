@@ -1,60 +1,79 @@
 <script setup lang="ts">
 // defineProps<{}>()
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
+import { appStore } from '@/store'
+import { LIST_STATUS } from '@/constant'
 
-const appList = ref([]);
+const app = appStore()
 
-const fetchAppList = async () => {
+const fetchList = async () => {
   try {
     const response = await fetch(
-      'https://itunes.apple.com/hk/rss/topgrossingapplications/limit=123/json'
-    );
-
+      'https://itunes.apple.com/hk/rss/topfreeapplications/limit=123/json'
+    )
     if (response.status === 200) {
-      const data = await response.json();
-      appList.value = data.feed.entry || []; // 将数据赋值给响应式变量
+      const data = await response.json()
+      app.recommendStatus = LIST_STATUS.SUCCESS
+      app.recommendList = (data.feed.entry || []).slice(0, 10)
+    } else {
+      throw new Error('Network response was not ok')
     }
-
-
   } catch (error) {
-    console.error('Error fetching data:', error);
+    app.recommendStatus = LIST_STATUS.ERROR
+    console.error('Error fetching data:', error)
   }
 };
 
 onMounted(() => {
-  fetchAppList()
+  fetchList()
 });
 
 </script>
 
 <template>
-  <div class="recommend">Recommend</div>
   <div class="recommend-wrap">
-    <ul class="app-list">
-      <li class="app-item" v-for="(item, index) in appList" :key="index">
-        <div :class="['app-logo']">
+    <div class="recommend-title">Recommend</div>
+    <ul class="recommend-list" v-if="app.recommendStatus === LIST_STATUS.SUCCESS && app.recommendList.length > 0">
+      <li class="recommend-item" v-for="(item, index) in app.recommendList" :key="index">
+        <div :class="['recommend-logo']">
           <img :src="item['im:image'][0].label" alt="">
         </div>
-        <div class="app-info">
-          <div class="app-name">
+        <div class="recommend-info">
+          <div class="recommend-name">
             {{ item['im:name'].label }}
           </div>
-          <span class="app-category">{{ item['category']['attributes']['label'] }}</span>
+          <span class="recommend-category">{{ item['category']['attributes']['label'] }}</span>
         </div>
       </li>
     </ul>
+    <div v-else-if="app.recommendStatus === LIST_STATUS.EMPTY && app.recommendList.length === 0" class="empty">暂无数据
+    </div>
+    <div v-else-if="app.recommendStatus === LIST_STATUS.LOADING" class="loading">加载中</div>
+    <div v-else class="error">数据异常</div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.recommend {
+.recommend-title {
   font-size: 30px;
-  padding-left: 20px;
+  font-weight: bold;
 }
 
 .recommend-wrap {
   padding-left: 20px;
   position: relative;
+
+  &::before {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    content: "";
+    background: #ccc;
+    width: 100%;
+    height: 1px;
+    transform: scaleY(50%);
+  }
 
   &::after {
     display: inline-block;
@@ -69,12 +88,12 @@ onMounted(() => {
   }
 }
 
-.app-list {
+.recommend-list {
   display: flex;
   overflow: auto;
 }
 
-.app-item {
+.recommend-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,7 +103,7 @@ onMounted(() => {
   font-size: 24px;
 }
 
-.app-logo {
+.recommend-logo {
   width: 150px;
   height: 150px;
   border-radius: 20px;
@@ -97,18 +116,18 @@ onMounted(() => {
   }
 }
 
-.app-info {
+.recommend-info {
   width: 100%;
 }
 
-.app-name {
+.recommend-name {
   width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.app-category {
+.recommend-category {
   font-size: 20px;
   color: #999;
 }

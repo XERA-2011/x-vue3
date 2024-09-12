@@ -1,36 +1,41 @@
 <script setup lang="ts">
-defineProps<{
-}>()
+import { appStore } from '@/store'
+const app = appStore()
 </script>
 
 <template>
-  <div>
-    <input type="text" placeholder="Search">
+  <div class="search-wrap">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search..." v-model="app.searchQuery">
+    </div>
+    <slot></slot>
   </div>
 </template>
 
-<style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
+<style lang="scss" scoped>
+.search-box {
+  font-size: 24px;
+  color: #7a7a7a;
+  margin: 20px 10px;
   position: relative;
-  top: -10px;
-}
 
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
+  >input {
+    font-size: 24px;
+    height: 50px;
+    padding: 0 50px;
+    background-color: #eee;
+    border-radius: 40px;
+    width: 100%;
+    border-color: transparent;
   }
+}
+
+.search-icon {
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
 }
 </style>
