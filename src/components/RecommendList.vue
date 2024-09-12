@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// defineProps<{}>()
 import { onMounted } from 'vue'
 import { appStore } from '@/store'
 import { LIST_STATUS } from '@/constant'

@@ -1,6 +1,8 @@
 # x-vue3
 
-This template should help get you started developing with Vue 3 in Vite.
+- `Vue3 + Vite + Vitest`
+- 组件单元测试 (vitest)
+- Responsive支持 (rem响应式支持)
 
 ## Project Setup
 

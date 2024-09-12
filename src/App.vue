@@ -20,18 +20,18 @@ const searchShow = computed(() => {
   return [LIST_STATUS.SUCCESS, LIST_STATUS.EMPTY].includes(searchStatus.value)
 })
 
-import Search from './components/Search.vue'
+import SearchBar from './components/SearchBar.vue'
 import ListTemplate from './components/ListTemplate.vue'
 import HotList from './components/HotList.vue'
-import Recommend from './components/Recommend.vue'
+import RecommendList from './components/RecommendList.vue'
 
 </script>
 
 <template>
-  <Search>
+  <SearchBar>
     <ListTemplate v-show="searchShow" :list="app.searchList" :status="searchStatus" />
-  </Search>
-  <Recommend v-show="!searchShow" />
+  </SearchBar>
+  <RecommendList v-show="!searchShow" />
   <HotList v-show="!searchShow" />
 </template>
 

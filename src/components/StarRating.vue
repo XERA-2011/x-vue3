@@ -1,9 +1,10 @@
 <script setup lang="ts">
-// defineProps<{
-//   score: number
-// }>()
 import { computed } from 'vue';
-const props = defineProps(['score', 'comments']);
+
+const props = defineProps<{
+  score: number,
+  comments?: number,
+}>();
 
 const LENGTH = 5
 const CLS_ON = 'on'
@@ -31,8 +32,8 @@ const itemClasses = computed(() => {
     result.push(CLS_HALF)
   }
 
-  // 补齐
-  while (result.length < LENGTH) { // 到这里还不够五颗星，则凑空星
+  // 到这里还不够五颗星，则凑空星
+  while (result.length < LENGTH) {
     result.push(CLS_OFF)
   }
 

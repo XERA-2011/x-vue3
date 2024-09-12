@@ -3,7 +3,6 @@ import { onMounted } from 'vue'
 import { appStore } from '@/store'
 import { LIST_STATUS } from '@/constant'
 
-
 const app = appStore()
 const fetchList = async () => {
   try {
