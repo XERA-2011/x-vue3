@@ -121,7 +121,7 @@ catalog:
   eslint-plugin-unicorn: ^62.0.0
   eslint-plugin-unused-imports: ^4.4.1
   eslint-plugin-vitest: ^0.5.4
-  eslint-plugin-vue: ^10.10.0
+  eslint-plugin-vue: ^10.11.0
   execa: ^9.6.1
   fast-xml-parser: ^5.3.3
   find-up: ^8.0.0
@@ -215,10 +215,10 @@ catalog:
   vue-tippy: ^6.7.1
   vue-tsc: ^3.3.11
   vue3-print-nb: ^0.1.4
-  vue3-signature: ^0.4.4
+  vue3-signature: ^0.4.5
   vuedraggable: ^4.1.0
-  vxe-pc-ui: ^4.18.1
-  vxe-table: ^4.21.5
+  vxe-pc-ui: ^4.18.4
+  vxe-table: ^4.21.7
   watermark-js-plus: ^1.6.6
   zod: ^4.5.4
   zod-defaults: 0.2.3
